@@ -32,5 +32,9 @@ const categoryList = [
   {name: "Scandinavian Restaurant", id: "4bf58dd8d48988d1c6941735"},
   {name: "Spanish Restaurant", id: "4bf58dd8d48988d150941735"},
   {name: "Turkish Restaurant", id: "4f04af1f2fb6e1c99f3db0bb"},
-]
+].sort(function(a,b) {
+  return a.name.localeCompare(b.name);
+})
+
+
 export default categoryList;
