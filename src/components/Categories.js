@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
-
 const Categories = (props) => {
-
   return (
     <Select onChange={props.change}>
         {props.categories.map(category => <option key={category.id}>{category.name}</option>)}
     </Select>
-
   )
 }
 
@@ -24,9 +20,7 @@ justify-content: center;
 align-items: center;
 margin: 20px 300px ;
 height: 30px;
-
 `
-
 export default Categories;
 
 

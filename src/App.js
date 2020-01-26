@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import Form from './components/Form';
 import Categories from './components/Categories';
 import RestaurantCard from './components/RestaurantCard'
+import Map from './components/Map'
 import categoryList from './utilities/CategoryList';
-
-
 
 
 class App extends Component {
@@ -14,6 +13,7 @@ state = {
   isLoaded: false,
   restaurants: [],
   selectedCategoryId: "4bf58dd8d48988d154941735",
+  cityCenterPosition: [58, 16],
 };
 
 handleSubmit = (e) => {
@@ -34,6 +34,7 @@ handleSubmit = (e) => {
     .then(res => {
       this.setState(prevState => ({
         isLoaded: true,
+        cityCenterPosition: [res.response.geocode.feature.geometry.center.lat, res.response.geocode.feature.geometry.center.lng],
         restaurants: res.response.venues.map(el => ({
             name: el.name,
             address: {
@@ -41,35 +42,33 @@ handleSubmit = (e) => {
                   city:el.location.formattedAddress[1],
                      },
             lat: el.location.lat,
-            lng: el.location.lng,  
+            lng: el.location.lng,
+            latLng: {
+              lat: el.location.lat, 
+              lng: el.location.lng,
+            },  
             category: el.categories[0].name,
+
         }))
-      }))
-      
+      }))      
     })
     .catch(error => console.log("Błąd: ", error)); 
     }
-
   handleInputChange = (e) => {
     this.setState({
       inputValue: e.target.value,
     })
-    
   }
 
   handleChangeCategory = (e) => {
             const element = categoryList.filter((el) => el.name === e.target.value ).map(el=> el.id).join(", ")
-
-    console.log(element);
       this.setState({
         selectedCategoryId: element
       })
-      
   }
   
-
-
   render() {
+    
     return (
    <GlobalStyle>
         <Title>
@@ -96,12 +95,14 @@ handleSubmit = (e) => {
             </RestaurantCard>
 
         </Menu>
-        <MapContainer></MapContainer>
+        {/* <MapWrapper> */}
+          <Map cityCenterPosition={this.state.cityCenterPosition} restaurantData={this.state.restaurants}>         
+          </Map>
+        {/* </MapWrapper> */}
       </GlobalStyle>
     )
   };
 }
-
 
 const GlobalStyle = styled.div`
 margin: 0;
@@ -114,10 +115,9 @@ justify-content: flex-start;
 height: 100vh;
 /* border: 1px solid; */
 `
-
 const Title = styled.p`
 font-family: 'Ibarra Real Nova', serif;
-font-size: 3em;
+font-size: 2.5em;
 text-align: center;
 /* border: 1px solid; */
 flex-basis: 100%;
@@ -133,28 +133,15 @@ width: 25%;
 padding: 5px;
 /* border: 1px solid; */
 `
-const MapContainer = styled.div`
-width: 70%;
-background-color: #d6cfc7;
-`
-
-
 
 const Text = styled.p`
 /* font-family: 'Roboto', sans-serif; */
 padding-left: 30px;
 /* border: 1px solid; */
 `
-
-
-
 const Options = styled.div`
 /* border: 1px solid; */
 `
-
-
-
-
 export default App
 
 // font-family: 'Roboto', sans-serif;

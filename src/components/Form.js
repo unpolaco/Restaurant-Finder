@@ -11,7 +11,7 @@ const Form = (props) => {
         id="searchInput" 
         value={props.value} 
         onChange={props.change} 
-        placeholder= "Lets find it!" 
+        placeholder= "Enter city name" 
       /> 
       <Button >Search</Button>
     </FormWrapper>

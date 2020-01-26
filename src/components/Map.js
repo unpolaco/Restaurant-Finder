@@ -1,57 +1,58 @@
-import React from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-// import styled from 'styled-components';
-import { Map, Marker, Popup, TileLayer } from 'leaflet'
+import React from 'react'
+import L from 'leaflet'
+import icon from '../img/map-pointer.svg';
+import 'leaflet/dist/leaflet.css'
+import styled from 'styled-components'
+
+const MapWrapper = styled.div`
+width: 70%;
+height: 300px;
+`
+
+export default class Map extends React.Component {
+  
+  componentDidMount(){
+    this.map = L.map('map', {
+      center: this.props.cityCenterPosition,
+      zoom: 12,
+      zoomControl: false,
+    });
+    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }, {
+      detectRetina:true,
+      maxZoom: 20,
+      maxNativeZoom: 17,
+    }).addTo(this.map);
+    this.layer = L.layerGroup().addTo(this.map)
+
+      let DefaultIcon = L.icon({
+        iconUrl: icon,
+        iconSize: [27, 36],
+    });
+    
+    L.Marker.prototype.options.icon = DefaultIcon;
+  }
+
+  componentDidUpdate({ restaurantData }) {
+    if (this.props.restaurantData !== restaurantData) {
+      this.updateMarkers(this.props.restaurantData)
+    }
+  }
+  updateMarkers(restaurantData) {
+    this.layer.clearLayers();
+    restaurantData.forEach(marker => {
+      L.marker(marker.latLng, { title: marker.name}).addTo(this.layer);
+    })
+  }
 
 
-
-
-
-
-export default function Mapa() {
-
-
-  return (
-    <div>
-      <Map style={{ height: "600px", width: "100%" }}
-          zoom={1}
-          center={[-0.09, 51.505]}>
-          <TileLayer url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-
-
-      </Map>
-    </div>
-  )
+  render() {    
+    return (
+      <MapWrapper id='map' cityCenterPosition={this.props.cityCenterPosition}>
+      </MapWrapper>
+    )
+  }
 }
 
-
-// const Map = (props) => {
-
-//   const position = [51.505, -0.09]
-  
-//   return (
-//     <Map center={position} zoom={13}>
-//     <TileLayer
-//       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//       attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-//     />
-//   )
-// }
-
-
-
-// const position = [51.505, -0.09]
-// const map = (
-//   <Map center={position} zoom={13}>
-//     <TileLayer
-//       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//       attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-//     />
-//     <Marker position={position}>
-//       <Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
-//     </Marker>
-//   </Map>
-// )
-
-// export default Map;
