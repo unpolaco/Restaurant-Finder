@@ -21,6 +21,7 @@ const Select = styled.select`
   border-radius: 20px; 
   border: none;
   outline-color: #fff; 
+  border: 1px solid ${({ theme }) => theme.amber500};
 `
 const Option = styled.option`
   color: ${({ theme }) => theme.amber800};

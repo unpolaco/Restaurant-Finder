@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Input = styled.input`
-	border: none;
+	border: 1px solid ${({ theme }) => theme.amber500};
 	color: ${({ theme }) => theme.ghostWhite};
 	cursor: text;
 	background-color: ${({ theme }) => theme.amber500};
