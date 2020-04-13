@@ -16,17 +16,16 @@ class App extends Component {
 		selectedRestaurant: '',
 	};
 
-	loadData() {
+	loadData(id, city = 'Warsaw') {
 		const fourSquareUrl = 'https://api.foursquare.com/v2/venues/search?';
 		const parameters = {
 			client_id: 'IEV0NGQ2WLUULDQ1TA0OD1UPUKZG0VTO3MYIKDN2MYHIKJ1E',
 			client_secret: 'SVPZ5HDAZK0JUFDNNVQBAWODV0FNG25YGM1EL5MB4SCSKRWD',
-			near: this.state.inputValue ? this.state.inputValue : 'Warsaw',
-			categoryId: this.state.selectedCategoryId,
+			near: city,
+			categoryId: id,
 			limit: 100,
 			v: 20200403,
 		};
-		console.log(fourSquareUrl + new URLSearchParams(parameters));
 		fetch(fourSquareUrl + new URLSearchParams(parameters))
 			.then((res) => res.json())
 			.then((res) => {
@@ -60,26 +59,20 @@ class App extends Component {
 			});
 	}
 
+	findCategoryId = (e) => {
+		const categoryId = categoryList
+			.filter((el) => el.name === e.target[1].value)
+			.map((el) => el.id);
+		return categoryId;
+	};
+
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.loadData();
+		const inputCityName = e.target[0].value;
+		const categoryId = this.findCategoryId(e);
+		this.loadData(categoryId, inputCityName);
 	};
 
-	handleInputChange = (e) => {
-		this.setState({
-			inputValue: e.target.value,
-		});
-	};
-
-	handleChangeCategory = (e) => {
-		const element = categoryList
-			.filter((el) => el.name === e.target.value)
-			.map((el) => el.id)
-			.join(', ');
-		this.setState({
-			selectedCategoryId: element,
-		});
-	};
 	handleSelectRestaurant = (e) => {
 		console.log(e.currentTarget.getAttribute('name'));
 
@@ -107,9 +100,6 @@ class App extends Component {
 						</Title>
 						<Menu>
 							<Form
-								onChangeCategory={this.handleChangeCategory}
-								value={this.state.inputValue}
-								change={this.handleInputChange}
 								submit={this.handleSubmit}
 							></Form>
 							<RestaurantCard
@@ -145,12 +135,12 @@ const Menu = styled.div`
 	width: 60%;
 `;
 const MainWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 	flex-direction: column;
 	align-content: center;
 	min-width: 850px;
 	margin-left: 20px;
-`
+`;
 
 export default App;

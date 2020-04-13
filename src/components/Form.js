@@ -13,14 +13,12 @@ const Form = (props) => {
 				required
 				type='text'
 				id='searchInput'
-				value={props.value}
-				onChange={props.change}
+				name='city'
 			/>
 			<AnimatedLabel htmlFor='searchInput'>City name</AnimatedLabel>
 			<SelectCategories
 				categories={categoryList}
-				onChangeCategory={props.onChangeCategory}
-				value={categoryList}
+				name='category'
 			></SelectCategories>
 			<SubmitButton type='submit'>Find it!</SubmitButton>
 		</FormWrapper>
