@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Form from './components/Form';
 import RestaurantCard from './components/RestaurantCard';
+import { Title } from './components/Title';
 import Map from './components/Map';
 import categoryList from './components/CategoryList';
-import GlobalStyle from './theme/GlobalStyle';
-import { theme } from './theme/mainTheme';
+import GlobalStyle from './styles/GlobalStyle';
+import { theme } from './styles/mainTheme';
 
 class App extends Component {
 	state = {
@@ -120,12 +121,7 @@ class App extends Component {
 	}
 }
 
-const Title = styled.p`
-	font-family: 'Ibarra Real Nova', serif;
-	font-size: ${({ theme }) => theme.fontXl};
-	text-align: left;
-	z-index: 11;
-`;
+
 const Menu = styled.div`
 	display: flex;
 	flex-direction: column;

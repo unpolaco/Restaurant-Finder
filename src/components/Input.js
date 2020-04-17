@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Input = styled.input`
 	border: 1px solid ${({ theme }) => theme.amber500};
-	color: ${({ theme }) => theme.ghostWhite};
+	color: ${({ theme }) => theme.backgroundColor};
 	cursor: text;
 	background-color: ${({ theme }) => theme.amber500};
 	padding: 3px 3px 3px 30px;
@@ -10,7 +10,7 @@ const Input = styled.input`
 	height: 40px;
 	font-size: ${({ theme }) => theme.fontL};
 	border-radius: 20px;
-	outline-color: #fff;
+	outline-color:  ${({ theme }) => theme.backgroundColor};
 	&:focus,
 	:valid {
 		border: 1px solid ${({ theme }) => theme.amber500};
@@ -21,6 +21,7 @@ const Input = styled.input`
 		left: 30px;
 		font-size: ${({ theme }) => theme.fontS};
 		color: ${({ theme }) => theme.amber500};
+	
 	}
 `;
 

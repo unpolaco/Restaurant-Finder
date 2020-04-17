@@ -8,11 +8,11 @@ const SubmitButton = styled.button`
   width: 80px; 
   font-size: ${({ theme }) => theme.fontL};
   color: ${({ theme }) => theme.amber500};
-  background-color: ${({ theme }) => theme.ghostWhite};
-  outline-color: #fff; 
+  background-color: ${({ theme }) => theme.backgroundColor};
+  outline-color: ${({ theme }) => theme.backgroundColor}; 
   transition: 0.5s all ease-out;
   &:hover {
-    color: ${({ theme }) => theme.ghostWhite};
+    color: ${({ theme }) => theme.backgroundColor};
     background-color: ${({ theme }) => theme.amber500};
   }
 `
