@@ -16,6 +16,13 @@ class App extends Component {
 		cityCenterPosition: [52.22977, 21.01178],
 		selectedRestaurant: '',
 	};
+	getDate = () => {
+		const today = new Date();
+		const month = today.getMonth() + 1;
+		return `${today.getFullYear()}${
+			month < 10 ? `0${month}` : `${month}`
+		}${today.getDate()}`;
+	};
 
 	loadData(id, city = 'Warsaw') {
 		const fourSquareUrl = 'https://api.foursquare.com/v2/venues/search?';
@@ -25,7 +32,7 @@ class App extends Component {
 			near: city,
 			categoryId: id,
 			limit: 100,
-			v: 20200403,
+			v: this.getDate(),
 		};
 		fetch(fourSquareUrl + new URLSearchParams(parameters))
 			.then((res) => res.json())
@@ -100,9 +107,7 @@ class App extends Component {
 							{this.state.inputValue ? this.state.inputValue : 'Warsaw'} ?
 						</Title>
 						<Menu>
-							<Form
-								submit={this.handleSubmit}
-							></Form>
+							<Form submit={this.handleSubmit}></Form>
 							<RestaurantCard
 								restaurantData={this.state.restaurants}
 								onSelectRestaurant={this.handleSelectRestaurant}
@@ -120,7 +125,6 @@ class App extends Component {
 		);
 	}
 }
-
 
 const Menu = styled.div`
 	display: flex;
