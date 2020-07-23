@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Form from './components/Form';
 import RestaurantCard from './components/RestaurantCard';
+import RestaurantModal from './components/RestaurantModal';
 import { Title } from './components/Title';
 import Map from './components/Map';
 import categoryList from './components/CategoryList';
@@ -10,11 +11,13 @@ import { theme } from './styles/mainTheme';
 
 class App extends Component {
 	state = {
-		inputValue: '',
+		cityName: '',
 		restaurants: [],
-		selectedCategoryId: '',
 		cityCenterPosition: [52.22977, 21.01178],
+		icon: '',
 		selectedRestaurant: '',
+		selectedRestaurantId: '',
+		selectedRestaurantData: {},
 	};
 	getDate = () => {
 		const today = new Date();
@@ -23,7 +26,6 @@ class App extends Component {
 			month < 10 ? `0${month}` : `${month}`
 		}${today.getDate()}`;
 	};
-
 	loadData(id, city = 'Warsaw') {
 		const fourSquareUrl = 'https://api.foursquare.com/v2/venues/search?';
 		const parameters = {
@@ -55,46 +57,108 @@ class App extends Component {
 								lat: el.location.lat,
 								lng: el.location.lng,
 							},
+							id: el.id,
 							category:
 								el === true
 									? el.categories[0].name
 									: '4bf58dd8d48988d110941735',
 						})),
+						icon: `${res.response.venues[0].categories[0].icon.prefix}64${res.response.venues[0].categories[0].icon.suffix}`,
 					}));
 				} else {
 					alert('Write a correct city name');
 				}
 			});
 	}
-
+	loadSelectionData(id) {
+		const fourSquareUrl = `https://api.foursquare.com/v2/venues/${id}?`;
+		const parameters = {
+			client_id: 'IEV0NGQ2WLUULDQ1TA0OD1UPUKZG0VTO3MYIKDN2MYHIKJ1E',
+			client_secret: 'SVPZ5HDAZK0JUFDNNVQBAWODV0FNG25YGM1EL5MB4SCSKRWD',
+			v: this.getDate(),
+		};
+		fetch(fourSquareUrl + new URLSearchParams(parameters))
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.response.venue) {
+					const data = res.response.venue;
+					this.setState((prevState) => ({
+						selectedRestaurantData: {
+							id: data.id,
+							location: data.location?.address || null,
+							city: data.location?.city,
+							rating: data.rating || null,
+							ratingSignals: data.ratingSignals || null,
+							priceText: data.price?.message || null,
+							price: data.price?.currency || null,
+							categories: data.categories.map((category) => {
+								return {
+									name: category.shortName,
+									icon: `${category.icon?.prefix}32${category.icon?.suffix}`,
+								};
+							}),
+							features: data.attributes?.groups?.map((attr) => {
+								const items = [];
+								items.push(
+									...attr.items?.map((item) => {
+										return { itemValue: item.displayValue };
+									})
+								);
+								return {
+									name: attr.name,
+									items: items,
+								};
+							}),
+							description: data.description || null,
+							open: data.hours?.status || null,
+							contact: {
+								phone: data.contact?.formattedPhone || data.contact?.phone || null,
+								facebook: data.contact?.facebookUsername
+									? `https://facebook.com/${data.contact.facebookUsername}`
+									: null,
+								url: data.url || data.shortUrl || null,
+							},
+							photo: data.bestPhoto
+								? `${data.bestPhoto?.prefix}${data.bestPhoto?.width}x${data.bestPhoto?.height}${data.bestPhoto?.suffix}`
+								: null,
+						},
+					}));
+				} else {
+					alert(
+						'Your query limit has run out today... Please come back tommorow!'
+					);
+				}
+			});
+	}
 	findCategoryId = (e) => {
 		const categoryId = categoryList
 			.filter((el) => el.name === e.target[1].value)
 			.map((el) => el.id);
 		return categoryId;
 	};
-
 	handleSubmit = (e) => {
 		e.preventDefault();
 		const inputCityName = e.target[0].value;
 		const categoryId = this.findCategoryId(e);
 		this.loadData(categoryId, inputCityName);
+		this.setState({
+			cityName: inputCityName,
+		});
 	};
-
 	handleSelectRestaurant = (e) => {
-		console.log(e.currentTarget.getAttribute('name'));
-
-		// this.setState({
-		//   selectedRestaurant: e.currentTarget.name,
-		// })
+		const selectedCardName = e.currentTarget.getAttribute('name');
+		const selectedCardId = e.currentTarget.getAttribute('id');
+		this.loadSelectionData(selectedCardId);
+		this.setState({
+			selectedRestaurantName: selectedCardName,
+			selectedRestaurantId: selectedCardId,
+		});
 	};
-
-	// handleSelectMarker = (e) => {
-	//   console.log(e.target.title);
-	//   // this.setState({
-	//   //   selectedRestaurant: e.target.options.title,
-	//   // })
-	// }
+	handleSelectMarker = (e) => {
+		this.setState({
+			selectedRestaurant: e.target.title,
+		});
+	};
 
 	render() {
 		return (
@@ -104,14 +168,19 @@ class App extends Component {
 					<MainWrapper>
 						<Title>
 							Where do you want to go tonight in{' '}
-							{this.state.inputValue ? this.state.inputValue : 'Warsaw'} ?
+							{this.state.cityName ? this.state.cityName : 'Warsaw'} ?
 						</Title>
 						<Menu>
 							<Form submit={this.handleSubmit}></Form>
 							<RestaurantCard
 								restaurantData={this.state.restaurants}
 								onSelectRestaurant={this.handleSelectRestaurant}
+								selectedRestaurant={this.state.selectedRestaurant}
+								icon={this.state.icon}
 							></RestaurantCard>
+							<RestaurantModal
+								selectedRestaurantData={this.state.selectedRestaurantData}
+							></RestaurantModal>
 						</Menu>
 						<Map
 							cityCenterPosition={this.state.cityCenterPosition}
@@ -142,5 +211,4 @@ const MainWrapper = styled.div`
 	min-width: 850px;
 	margin-left: 20px;
 `;
-
 export default App;

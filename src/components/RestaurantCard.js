@@ -9,6 +9,7 @@ const RestaurantCard = (props) => {
 				<CardWrapper
 					onClick={props.onSelectRestaurant}
 					name={el.name}
+					id={el.id}
 					index={index}
 					className={'test'}
 					key={uuid.v4()}
@@ -16,6 +17,7 @@ const RestaurantCard = (props) => {
 					<RestaurantCardText name={el.name} key={uuid.v4()}>
 						{el.name.toUpperCase()}
 					</RestaurantCardText>
+					<Icon src={props.icon} alt='restaurant category icon'></Icon>
 					<RestaurantCardText key={uuid.v4()}>
 						{el.address.street}
 					</RestaurantCardText>
@@ -39,6 +41,7 @@ from {opacity: 0}
 to {opacity:100%}
 `;
 const CardWrapper = styled.div`
+	position: relative;
 	opacity: 0;
 	border-radius: 20px;
 	border: 1px solid #ffc107;
@@ -60,4 +63,9 @@ const RestaurantCardText = styled.p`
 	font-weight: ${(props) => (props.name ? '600' : '')};
 	line-height: 8px;;
 `;
+const Icon = styled.img`
+	position: absolute;
+	left: 40px;
+	top: 0px;
+`
 export default RestaurantCard;
