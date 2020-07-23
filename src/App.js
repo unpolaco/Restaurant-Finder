@@ -161,6 +161,15 @@ class App extends Component {
 	};
 
 	render() {
+		const { cityName, 
+						restaurants, 
+						selectedRestaurant, 
+						selectedRestaurantData, 
+						cityCenterPosition, 
+						icon } = this.state;
+		const { handleSubmit, 
+						handleSelectMarker, 
+						handleSelectRestaurant } = this;
 		return (
 			<>
 				<GlobalStyle />
@@ -168,25 +177,25 @@ class App extends Component {
 					<MainWrapper>
 						<Title>
 							Where do you want to go tonight in{' '}
-							{this.state.cityName ? this.state.cityName : 'Warsaw'} ?
+							{cityName ? cityName : 'Warsaw'} ?
 						</Title>
 						<Menu>
-							<Form submit={this.handleSubmit}></Form>
+							<Form submit={handleSubmit}></Form>
 							<RestaurantCard
-								restaurantData={this.state.restaurants}
-								onSelectRestaurant={this.handleSelectRestaurant}
-								selectedRestaurant={this.state.selectedRestaurant}
-								icon={this.state.icon}
+								restaurantData={restaurants}
+								onSelectRestaurant={handleSelectRestaurant}
+								selectedRestaurant={selectedRestaurant}
+								icon={icon}
 							></RestaurantCard>
 							<RestaurantModal
-								selectedRestaurantData={this.state.selectedRestaurantData}
+								selectedRestaurantData={selectedRestaurantData}
 							></RestaurantModal>
 						</Menu>
 						<Map
-							cityCenterPosition={this.state.cityCenterPosition}
-							restaurantData={this.state.restaurants}
-							onSelectMarker={this.handleSelectMarker}
-							selectedRestaurant={this.state.selectedRestaurant}
+							cityCenterPosition={cityCenterPosition}
+							restaurantData={restaurants}
+							onSelectMarker={handleSelectMarker}
+							selectedRestaurant={selectedRestaurant}
 						></Map>
 					</MainWrapper>
 				</ThemeProvider>

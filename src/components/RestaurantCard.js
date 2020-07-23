@@ -2,12 +2,12 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import uuid from 'uuid';
 
-const RestaurantCard = (props) => {
+const RestaurantCard = ({restaurantData, onSelectRestaurant, icon}) => {
 	return (
 		<Wrapper id='cardWrapper'>
-			{props.restaurantData.map((el, index) => (
+			{restaurantData.map((el, index) => (
 				<CardWrapper
-					onClick={props.onSelectRestaurant}
+					onClick={onSelectRestaurant}
 					name={el.name}
 					id={el.id}
 					index={index}
@@ -17,7 +17,7 @@ const RestaurantCard = (props) => {
 					<RestaurantCardText name={el.name} key={uuid.v4()}>
 						{el.name.toUpperCase()}
 					</RestaurantCardText>
-					<Icon src={props.icon} alt='restaurant category icon'></Icon>
+					<Icon src={icon} alt='restaurant category icon'></Icon>
 					<RestaurantCardText key={uuid.v4()}>
 						{el.address.street}
 					</RestaurantCardText>
