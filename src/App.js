@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import Form from './components/Form';
-import RestaurantCard from './components/RestaurantCard';
-import RestaurantModal from './components/RestaurantModal';
-import { Title } from './components/Title';
-import Map from './components/Map';
-import categoryList from './components/CategoryList';
-import GlobalStyle from './styles/GlobalStyle';
-import { theme } from './styles/mainTheme';
+import Form from './components/form';
+import RestaurantCard from './components/restaurant_card';
+import RestaurantModal from './components/restaurant_modal';
+import { Title } from './components/title';
+import Map from './components/map';
+import categoryList from './assets/category_list';
+import GlobalStyle from './styles/global_style';
+import { theme } from './styles/main_theme';
 
 class App extends Component {
 	state = {
@@ -18,6 +18,7 @@ class App extends Component {
 		selectedRestaurant: '',
 		selectedRestaurantId: '',
 		selectedRestaurantData: {},
+		modalIsVisible: false,
 	};
 	getDate = () => {
 		const today = new Date();
@@ -84,6 +85,7 @@ class App extends Component {
 					const data = res.response.venue;
 					this.setState((prevState) => ({
 						selectedRestaurantData: {
+							name: data.name.toUpperCase(),
 							id: data.id,
 							location: data.location?.address || null,
 							city: data.location?.city,
@@ -112,9 +114,9 @@ class App extends Component {
 							description: data.description || null,
 							open: data.hours?.status || null,
 							contact: {
-								phone: data.contact?.formattedPhone || data.contact?.phone || null,
+								phone: (data.contact?.formattedPhone || data.contact?.phone) || null,
 								facebook: data.contact?.facebookUsername
-									? `https://facebook.com/${data.contact.facebookUsername}`
+									? data.contact.facebookUsername
 									: null,
 								url: data.url || data.shortUrl || null,
 							},
@@ -122,6 +124,7 @@ class App extends Component {
 								? `${data.bestPhoto?.prefix}${data.bestPhoto?.width}x${data.bestPhoto?.height}${data.bestPhoto?.suffix}`
 								: null,
 						},
+						modalIsVisible: true,
 					}));
 				} else {
 					alert(
@@ -159,17 +162,23 @@ class App extends Component {
 			selectedRestaurant: e.target.title,
 		});
 	};
-
+	handleCloseModal = (e) => {
+		this.setState({
+			modalIsVisible: false,
+		})
+	}
 	render() {
 		const { cityName, 
 						restaurants, 
 						selectedRestaurant, 
 						selectedRestaurantData, 
 						cityCenterPosition, 
-						icon } = this.state;
+						icon,
+						modalIsVisible } = this.state;
 		const { handleSubmit, 
 						handleSelectMarker, 
-						handleSelectRestaurant } = this;
+						handleSelectRestaurant,
+						handleCloseModal } = this;
 		return (
 			<>
 				<GlobalStyle />
@@ -180,23 +189,27 @@ class App extends Component {
 							{cityName ? cityName : 'Warsaw'} ?
 						</Title>
 						<Menu>
-							<Form submit={handleSubmit}></Form>
+							<Form submit={handleSubmit}/>
+							{modalIsVisible ? 
+							<RestaurantModal
+								onCloseModal={handleCloseModal}
+								selectedRestaurantData={selectedRestaurantData}
+								modalIsVisible={modalIsVisible}
+							/> : 
 							<RestaurantCard
 								restaurantData={restaurants}
 								onSelectRestaurant={handleSelectRestaurant}
 								selectedRestaurant={selectedRestaurant}
 								icon={icon}
-							></RestaurantCard>
-							<RestaurantModal
-								selectedRestaurantData={selectedRestaurantData}
-							></RestaurantModal>
+							/>
+							}
 						</Menu>
 						<Map
 							cityCenterPosition={cityCenterPosition}
 							restaurantData={restaurants}
 							onSelectMarker={handleSelectMarker}
 							selectedRestaurant={selectedRestaurant}
-						></Map>
+						/>
 					</MainWrapper>
 				</ThemeProvider>
 			</>
@@ -204,20 +217,18 @@ class App extends Component {
 	}
 }
 
+const MainWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	min-width: 850px;
+	margin-left: 20px;
+`;
 const Menu = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-content: left;
-	height: 70%;
 	width: 60%;
-`;
-const MainWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex-direction: column;
-	align-content: center;
-	min-width: 850px;
-	margin-left: 20px;
 `;
 export default App;
