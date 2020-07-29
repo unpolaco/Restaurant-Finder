@@ -1,10 +1,14 @@
 import React from 'react';
-import L from 'leaflet';
-import icon from '../img/map-pointer.svg';
-import 'leaflet/dist/leaflet.css';
 import styled from 'styled-components';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import icon from '../assets/svg/map-pointer.svg';
 
 export default class Map extends React.Component {
+
+	handleClickMarker = (e) => {
+		// console.log(e.target.options.id)
+	}
 	componentDidMount() {
 		this.map = L.map('map', {
 			center: this.props.cityCenterPosition,
@@ -36,19 +40,26 @@ export default class Map extends React.Component {
 	}
 	updateMarkers(restaurantData) {
 		this.layer.clearLayers();
-		// console.log(this.name);
 		restaurantData.forEach((marker) => {
-			L.marker(marker.latLng, { title: marker.name })
+			L.marker(marker.latLng, { title: marker.name, id: marker.id })
 				.addTo(this.layer)
-				.bindPopup(marker.name);
+				.on('click', this.handleClickMarker)
+				.bindPopup(marker.name)
+        .on('mouseover', function (e) {
+            this.openPopup();
+        })
+        .on('mouseout', function (e) {
+            this.closePopup();
+        })
 		});
 	}
 	render() {
+		const { cityCenterPosition, onSelectMarker } = this.props;
 		return (
 			<MapWrapper
 				id='map'
-				cityCenterPosition={this.props.cityCenterPosition}
-				onClick={this.props.onSelectMarker}
+				cityCenterPosition={cityCenterPosition}
+				onClick={onSelectMarker}
 			></MapWrapper>
 		);
 	}
@@ -64,4 +75,15 @@ const MapWrapper = styled.div`
 	overflow: hidden;
 	border-radius: 350px;
 	z-index: 0;
+	@media (min-width: 1024px) {
+    position: absolute;
+		top: 150px;
+		left: 600px;
+  }
+	@media (max-width: 500px) {
+    position: fixed;
+		bottom: -100px;
+		width: 90vw;
+		height: 90vw;
+  }
 `;

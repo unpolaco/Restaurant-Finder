@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import SelectCategories from './SelectCategories';
-import categoryList from './CategoryList';
-import { Input } from './Input';
-import { AnimatedLabel } from './Label';
-import { SubmitButton } from './Button';
+import SelectCategories from './select_categories';
+import categoryList from '../assets/category_list';
+import { Input } from './input';
+import { AnimatedLabel } from './label';
+import { SubmitButton } from './button';
 
 const Form = (props) => {
 	return (
@@ -14,6 +14,7 @@ const Form = (props) => {
 				type='text'
 				id='searchInput'
 				name='city'
+				autoComplete="off"
 			/>
 			<AnimatedLabel htmlFor='searchInput'>City name</AnimatedLabel>
 			<SelectCategories
@@ -24,14 +25,13 @@ const Form = (props) => {
 		</FormWrapper>
 	);
 };
-
 const FormWrapper = styled.form`
 	position: relative;
+	z-index: 10;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	height: 40px;
 	width: 650px;
-	z-index: 10;
-`;
+`
 export default Form;

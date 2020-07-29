@@ -17,7 +17,10 @@ const RestaurantCard = ({restaurantData, onSelectRestaurant, icon}) => {
 					<RestaurantCardText name={el.name} key={uuid.v4()}>
 						{el.name.toUpperCase()}
 					</RestaurantCardText>
-					<Icon src={icon} alt='restaurant category icon'></Icon>
+					<Icon 
+						src={icon} 
+						alt='restaurant category icon'
+					/>
 					<RestaurantCardText key={uuid.v4()}>
 						{el.address.street}
 					</RestaurantCardText>
@@ -30,11 +33,12 @@ const RestaurantCard = ({restaurantData, onSelectRestaurant, icon}) => {
 const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	height: 500px;
+	height: 450px;
 	width: 600px;
 	overflow-x: auto;
 	margin-top: 20px;
 	z-index: 12;
+	transition: 1s;
 `;
 const unhiddenAnimation = keyframes`
 from {opacity: 0}
@@ -44,24 +48,24 @@ const CardWrapper = styled.div`
 	position: relative;
 	opacity: 0;
 	border-radius: 20px;
-	border: 1px solid #ffc107;
+	border: 1px solid ${({ theme }) => theme.amber600};
 	margin: 5px 0;
-	background-color: ${({ theme }) => theme.backgroundColor};
-	color: grey;
+	background-color: ${({ theme }) => theme.ghostWhite};
+	color: ${({ theme }) => theme.blueGrey900};
 	width: 92%;
 	height: 70px;
 	text-align: center;
-	animation: ${unhiddenAnimation} 0.5s ease-in-out
+	animation: ${unhiddenAnimation} 0.3s ease-in-out
 		${(props) => props.index * 0.2}s forwards;
 	&:hover {
-		background-color: #ffc107;
-		color: ${({ theme }) => theme.backgroundColor};
+		background-color: ${({ theme }) => theme.amber600};
+		color: ${({ theme }) => theme.ghostWhite};
 	}
 `;
 const RestaurantCardText = styled.p`
-	font-size: ${(props) => (props.name ? 'fontM' : 'fontS')};
+	font-size: ${(props) => (props.name ? '1.7rem' : '1.5rem')};
 	font-weight: ${(props) => (props.name ? '600' : '')};
-	line-height: 8px;;
+	margin: 5px;
 `;
 const Icon = styled.img`
 	position: absolute;
