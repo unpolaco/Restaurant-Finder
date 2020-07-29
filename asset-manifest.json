@@ -1,23 +1,28 @@
 {
   "files": {
-    "main.js": "/Restaurant-Finder/static/js/main.2e4f2492.chunk.js",
-    "main.js.map": "/Restaurant-Finder/static/js/main.2e4f2492.chunk.js.map",
+    "main.js": "/Restaurant-Finder/static/js/main.415988b3.chunk.js",
+    "main.js.map": "/Restaurant-Finder/static/js/main.415988b3.chunk.js.map",
     "runtime-main.js": "/Restaurant-Finder/static/js/runtime-main.49d91ff6.js",
     "runtime-main.js.map": "/Restaurant-Finder/static/js/runtime-main.49d91ff6.js.map",
     "static/css/2.36f280e5.chunk.css": "/Restaurant-Finder/static/css/2.36f280e5.chunk.css",
-    "static/js/2.bf6e9de7.chunk.js": "/Restaurant-Finder/static/js/2.bf6e9de7.chunk.js",
-    "static/js/2.bf6e9de7.chunk.js.map": "/Restaurant-Finder/static/js/2.bf6e9de7.chunk.js.map",
+    "static/js/2.ef992c3b.chunk.js": "/Restaurant-Finder/static/js/2.ef992c3b.chunk.js",
+    "static/js/2.ef992c3b.chunk.js.map": "/Restaurant-Finder/static/js/2.ef992c3b.chunk.js.map",
     "index.html": "/Restaurant-Finder/index.html",
-    "precache-manifest.a21cf74b9c77c85e8e9c2bb96ba1045d.js": "/Restaurant-Finder/precache-manifest.a21cf74b9c77c85e8e9c2bb96ba1045d.js",
+    "precache-manifest.95e7071868b901bde583c63a5dfbd294.js": "/Restaurant-Finder/precache-manifest.95e7071868b901bde583c63a5dfbd294.js",
     "service-worker.js": "/Restaurant-Finder/service-worker.js",
     "static/css/2.36f280e5.chunk.css.map": "/Restaurant-Finder/static/css/2.36f280e5.chunk.css.map",
-    "static/js/2.bf6e9de7.chunk.js.LICENSE": "/Restaurant-Finder/static/js/2.bf6e9de7.chunk.js.LICENSE",
+    "static/js/2.ef992c3b.chunk.js.LICENSE": "/Restaurant-Finder/static/js/2.ef992c3b.chunk.js.LICENSE",
+    "static/media/call-outline.f23ff3fb.svg": "/Restaurant-Finder/static/media/call-outline.f23ff3fb.svg",
+    "static/media/close-outline.fe813ef0.svg": "/Restaurant-Finder/static/media/close-outline.fe813ef0.svg",
+    "static/media/globe-outline.8395a842.svg": "/Restaurant-Finder/static/media/globe-outline.8395a842.svg",
+    "static/media/happy-outline.43cf29cc.svg": "/Restaurant-Finder/static/media/happy-outline.43cf29cc.svg",
+    "static/media/logo-facebook.a2cfbc35.svg": "/Restaurant-Finder/static/media/logo-facebook.a2cfbc35.svg",
     "static/media/map-pointer.svg": "/Restaurant-Finder/static/media/map-pointer.339bba5d.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.49d91ff6.js",
     "static/css/2.36f280e5.chunk.css",
-    "static/js/2.bf6e9de7.chunk.js",
-    "static/js/main.2e4f2492.chunk.js"
+    "static/js/2.ef992c3b.chunk.js",
+    "static/js/main.415988b3.chunk.js"
   ]
 }
