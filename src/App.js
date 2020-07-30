@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Form from './components/form';
 import RestaurantCard from './components/restaurant_card';
@@ -9,25 +9,24 @@ import categoryList from './assets/category_list';
 import GlobalStyle from './styles/global_style';
 import { theme } from './styles/main_theme';
 
-class App extends Component {
-	state = {
-		cityName: '',
-		restaurants: [],
-		cityCenterPosition: [52.22977, 21.01178],
-		icon: '',
-		selectedRestaurant: '',
-		selectedRestaurantId: '',
-		selectedRestaurantData: {},
-		modalIsVisible: false,
-	};
-	getDate = () => {
+function App() {
+	const [cityName, setCityName] = useState('');
+	const [restaurants, setRestaurants] = useState([]);
+	const [cityCenterPosition, setCityCenterPosition] = useState([52.22977, 21.01178]);
+	const [icon, setIcon] = useState('');
+	const [selectedRestaurant, setSelectedRestaurant] = useState('');
+	const [selectedRestaurantId, setSelectedRestaurantId] = useState('');
+	const [selectedRestaurantData, setSelectedRestaurantData] = useState({});
+	const [modalIsVisible, setModalIsVisible] = useState(false);
+
+	const getDate = () => {
 		const today = new Date();
 		const month = today.getMonth() + 1;
 		return `${today.getFullYear()}${
 			month < 10 ? `0${month}` : `${month}`
 		}${today.getDate()}`;
 	};
-	loadData(id, city = 'Warsaw') {
+	function loadData(id, city = 'Warsaw') {
 		const fourSquareUrl = 'https://api.foursquare.com/v2/venues/search?';
 		const parameters = {
 			client_id: 'IEV0NGQ2WLUULDQ1TA0OD1UPUKZG0VTO3MYIKDN2MYHIKJ1E',
@@ -35,18 +34,17 @@ class App extends Component {
 			near: city,
 			categoryId: id,
 			limit: 100,
-			v: this.getDate(),
+			v: getDate(),
 		};
 		fetch(fourSquareUrl + new URLSearchParams(parameters))
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.response.venues) {
-					this.setState((prevState) => ({
-						cityCenterPosition: [
+						setCityCenterPosition([
 							res.response.geocode.feature.geometry.center.lat,
 							res.response.geocode.feature.geometry.center.lng,
-						],
-						restaurants: res.response.venues.map((el) => ({
+						])
+						setRestaurants(res.response.venues.map((el) => ({
 							name: el.name,
 							address: {
 								street: el.location.formattedAddress[0],
@@ -63,28 +61,26 @@ class App extends Component {
 								el === true
 									? el.categories[0].name
 									: '4bf58dd8d48988d110941735',
-						})),
-						icon: `${res.response.venues[0].categories[0].icon.prefix}64${res.response.venues[0].categories[0].icon.suffix}`,
-					}));
+						})))
+						setIcon(`${res.response.venues[0].categories[0].icon.prefix}64${res.response.venues[0].categories[0].icon.suffix}`)
 				} else {
 					alert('Write a correct city name');
 				}
 			});
 	}
-	loadSelectionData(id) {
+	function loadSelectionData(id) {
 		const fourSquareUrl = `https://api.foursquare.com/v2/venues/${id}?`;
 		const parameters = {
 			client_id: 'IEV0NGQ2WLUULDQ1TA0OD1UPUKZG0VTO3MYIKDN2MYHIKJ1E',
 			client_secret: 'SVPZ5HDAZK0JUFDNNVQBAWODV0FNG25YGM1EL5MB4SCSKRWD',
-			v: this.getDate(),
+			v: getDate(),
 		};
 		fetch(fourSquareUrl + new URLSearchParams(parameters))
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.response.venue) {
 					const data = res.response.venue;
-					this.setState((prevState) => ({
-						selectedRestaurantData: {
+						setSelectedRestaurantData({
 							name: data.name.toUpperCase(),
 							id: data.id,
 							location: data.location?.address || null,
@@ -97,7 +93,7 @@ class App extends Component {
 								return {
 									name: category.shortName,
 									icon: `${category.icon?.prefix}32${category.icon?.suffix}`,
-								};
+								}
 							}),
 							features: data.attributes?.groups?.map((attr) => {
 								const items = [];
@@ -123,99 +119,75 @@ class App extends Component {
 							photo: data.bestPhoto
 								? `${data.bestPhoto?.prefix}${data.bestPhoto?.width}x${data.bestPhoto?.height}${data.bestPhoto?.suffix}`
 								: null,
-						},
-						modalIsVisible: true,
-					}));
+						});
+						setModalIsVisible(true)
 				} else {
 					alert(
-						'Your query limit has run out today... Please come back tommorow!'
+						'Your query limit has run out today... Please come back tomorrow!'
 					);
 				}
 			});
 	}
-	findCategoryId = (e) => {
+	const findCategoryId = (e) => {
 		const categoryId = categoryList
 			.filter((el) => el.name === e.target[1].value)
 			.map((el) => el.id);
 		return categoryId;
 	};
-	handleSubmit = (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		const inputCityName = e.target[0].value;
-		const categoryId = this.findCategoryId(e);
-		this.loadData(categoryId, inputCityName);
-		this.setState({
-			cityName: inputCityName,
-		});
+		const categoryId = findCategoryId(e);
+		loadData(categoryId, inputCityName);
+		setCityName(inputCityName);
 	};
-	handleSelectRestaurant = (e) => {
+	const handleSelectRestaurant = (e) => {
 		const selectedCardName = e.currentTarget.getAttribute('name');
 		const selectedCardId = e.currentTarget.getAttribute('id');
-		this.loadSelectionData(selectedCardId);
-		this.setState({
-			selectedRestaurantName: selectedCardName,
-			selectedRestaurantId: selectedCardId,
-		});
+		loadSelectionData(selectedCardId);
+		setSelectedRestaurant(selectedCardName);
+		setSelectedRestaurantId(selectedCardId);
 	};
-	handleSelectMarker = (e) => {
-		this.setState({
-			selectedRestaurant: e.target.title,
-		});
-	};
-	handleCloseModal = (e) => {
-		this.setState({
-			modalIsVisible: false,
-		})
-	}
-	render() {
-		const { cityName, 
-						restaurants, 
-						selectedRestaurant, 
-						selectedRestaurantData, 
-						cityCenterPosition, 
-						icon,
-						modalIsVisible } = this.state;
-		const { handleSubmit, 
-						handleSelectMarker, 
-						handleSelectRestaurant,
-						handleCloseModal } = this;
-		return (
-			<>
-				<GlobalStyle />
-				<ThemeProvider theme={theme}>
-					<MainWrapper>
-						<Title>
-							Where do you want to go tonight in{' '}
-							{cityName ? cityName : 'Warsaw'} ?
-						</Title>
-						<Menu>
-							<Form submit={handleSubmit}/>
-							{modalIsVisible ? 
+	const handleSelectMarker = e => setSelectedRestaurant(e.target.title)
+	const handleCloseModal = e => setModalIsVisible(false)
+
+	return (
+		<>
+			<GlobalStyle />
+			<ThemeProvider theme={theme}>
+				<MainWrapper>
+					<Title>
+						Where do you want to go tonight in {cityName ? cityName : 'Warsaw'}{' '}
+						?
+					</Title>
+					<Menu>
+						<Form submit={handleSubmit} />
+						{modalIsVisible ? (
 							<RestaurantModal
 								onCloseModal={handleCloseModal}
 								selectedRestaurantData={selectedRestaurantData}
 								modalIsVisible={modalIsVisible}
-							/> : 
+							/>
+						) : (
 							<RestaurantCard
 								restaurantData={restaurants}
 								onSelectRestaurant={handleSelectRestaurant}
 								selectedRestaurant={selectedRestaurant}
 								icon={icon}
 							/>
-							}
-						</Menu>
-						<Map
-							cityCenterPosition={cityCenterPosition}
-							restaurantData={restaurants}
-							onSelectMarker={handleSelectMarker}
-							selectedRestaurant={selectedRestaurant}
-						/>
-					</MainWrapper>
-				</ThemeProvider>
-			</>
-		);
+						)}
+					</Menu>
+					<Map
+						cityCenterPosition={cityCenterPosition}
+						restaurantData={restaurants}
+						onSelectMarker={handleSelectMarker}
+						selectedRestaurant={selectedRestaurant}
+					/>
+				</MainWrapper>
+			</ThemeProvider>
+		</>
+	);
 	}
-}
 
 const MainWrapper = styled.div`
 	display: flex;
