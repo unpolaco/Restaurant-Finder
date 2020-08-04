@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import SelectCategories from './select_categories';
+import SelectCategories from './Select_Categories';
 import categoryList from '../assets/category_list';
-import { Input } from './input';
-import { AnimatedLabel } from './label';
-import { SubmitButton } from './button';
+import { Input } from './Input';
+import { AnimatedLabel } from './Label';
+import { SubmitButton } from './Button';
 
 const Form = (props) => {
 	return (

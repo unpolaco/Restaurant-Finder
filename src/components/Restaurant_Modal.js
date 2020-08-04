@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../assets/svg/close-outline.svg';
-import Features from './modal_items/modal_features';
-import Categories from './modal_items/modal_categories';
-import Contact from './modal_items/modal_contact';
-import Rating from './modal_items/modal_rating';
-import Description from './modal_items/modal_description';
-import Open from './modal_items/modal_open';
-import Main from './modal_items/modal_main';
-import Price from './modal_items/modal_price';
+import Features from './modal_items/Modal_Features';
+import Categories from './modal_items/Modal_Categories';
+import Contact from './modal_items/Modal_Contact';
+import Rating from './modal_items/Modal_Rating';
+import Description from './modal_items/Modal_Description';
+import Open from './modal_items/Modal_Open';
+import Main from './modal_items/Modal_Main';
+import Price from './modal_items/Modal_Price';
 
 const RestaurantModal = ({
 	selectedRestaurantData,

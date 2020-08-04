@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import Form from './components/form';
-import RestaurantCard from './components/restaurant_card';
-import RestaurantModal from './components/restaurant_modal';
-import { Title } from './components/title';
-import Map from './components/map';
+import Form from './components/Form';
+import RestaurantCard from './components/Restaurant_Card';
+import RestaurantModal from './components/Restaurant_Modal';
+import { Title } from './components/Title';
+import Map from './components/Map';
 import categoryList from './assets/category_list';
-import GlobalStyle from './styles/global_style';
-import { theme } from './styles/main_theme';
+import GlobalStyle from './styles/Global_Style';
+import { theme } from './styles/Main_Theme';
 
 function App() {
 	const [cityName, setCityName] = useState('');
