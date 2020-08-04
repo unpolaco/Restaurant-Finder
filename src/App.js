@@ -21,11 +21,12 @@ function App() {
 
 	const getDate = () => {
 		const today = new Date();
-		const month = today.getMonth() + 1;
-		return `${today.getFullYear()}${
-			month < 10 ? `0${month}` : `${month}`
-		}${today.getDate()}`;
+		const year = today.getFullYear();
+		const month = today.getMonth() < 10 ? `0${today.getMonth()}` : today.getMonth() + 1;
+		const day = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
+		return `${year}${month}${day}`;
 	};
+
 	function loadData(id, city = 'Warsaw') {
 		const fourSquareUrl = 'https://api.foursquare.com/v2/venues/search?';
 		const parameters = {
@@ -57,8 +58,7 @@ function App() {
 								lng: el.location.lng,
 							},
 							id: el.id,
-							category:
-								el === true
+							category: el === true
 									? el.categories[0].name
 									: '4bf58dd8d48988d110941735',
 						})))

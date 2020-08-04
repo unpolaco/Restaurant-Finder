@@ -40,7 +40,7 @@ function Map({ cityCenterPosition, onSelectMarker, restaurantData }) {
 					key={marker.id}
 					onClick={onSelectMarker}
 					icon={restaurantIcon}
-					position={(marker.lat, marker.latLng)}
+					position={(marker.latLng)}
 				>
 					<Tooltip>{marker.name}</Tooltip>
 				</Marker>
