@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../assets/svg/close-outline.svg';
 import Features from './modal_items/Modal_Features';
@@ -10,7 +10,12 @@ import Open from './modal_items/Modal_Open';
 import Main from './modal_items/Modal_Main';
 import Price from './modal_items/Modal_Price';
 
-const RestaurantModal = ({
+interface RestaurantModalProps {
+	selectedRestaurantData: any,
+	onCloseModal: ()=> void,
+}
+
+const RestaurantModal: FC<RestaurantModalProps> = ({
 	selectedRestaurantData,
 	onCloseModal,
 }) => {

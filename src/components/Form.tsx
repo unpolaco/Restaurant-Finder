@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import SelectCategories from './Select_Categories';
 import categoryList from '../assets/category_list';
@@ -6,9 +6,13 @@ import { Input } from './Input';
 import { AnimatedLabel } from './Label';
 import { SubmitButton } from './Button';
 
-const Form = (props) => {
+interface FormProps {
+	submit: ()=>void
+}
+
+const Form: FC<FormProps> = ({submit}) => {
 	return (
-		<FormWrapper onSubmit={props.submit}>
+		<FormWrapper onSubmit={submit}>
 			<Input
 				required
 				type='text'
