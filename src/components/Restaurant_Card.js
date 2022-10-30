@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const RestaurantCard = ({restaurantData, onSelectRestaurant, icon}) => {
 	return (
@@ -12,16 +12,16 @@ const RestaurantCard = ({restaurantData, onSelectRestaurant, icon}) => {
 					id={el.id}
 					index={index}
 					className={'test'}
-					key={uuid.v4()}
+					key={uuidv4()}
 				>
-					<RestaurantCardText name={el.name} key={uuid.v4()}>
+					<RestaurantCardText name={el.name} key={uuidv4()}>
 						{el.name.toUpperCase()}
 					</RestaurantCardText>
 					<Icon 
 						src={icon} 
 						alt='restaurant category icon'
 					/>
-					<RestaurantCardText key={uuid.v4()}>
+					<RestaurantCardText key={uuidv4()}>
 						{el.address.street}
 					</RestaurantCardText>
 				</CardWrapper>

@@ -6,8 +6,8 @@ import RestaurantModal from './components/Restaurant_Modal';
 import { Title } from './components/Title';
 import Map from './components/Map';
 import categoryList from './assets/category_list';
-import GlobalStyle from './styles/Global_Style';
-import { theme } from './styles/Main_Theme';
+import GlobalStyle from './styles/global_style';
+import { theme } from './styles/main_theme';
 
 function App() {
 	const [cityName, setCityName] = useState('');
