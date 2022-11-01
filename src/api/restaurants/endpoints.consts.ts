@@ -1,0 +1,1 @@
+export const FOUR_SQUARE_ENDPOINT = "https://api.foursquare.com/v2/venues/search?"
