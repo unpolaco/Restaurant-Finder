@@ -20,8 +20,8 @@ export const getRestaurantList = async (params: GetRestaurantListParams): Promis
     return restaurantListMapper(data)
 }
 
-export const getSelectedRestaurant = async (id: string, params: GetSelectedRestaurantParams): Promise<SelectedRestaurantFromDto> => {
-    const response = await axios.get<SelectedRestaurantDto>(`${FOUR_SQUARE_ENDPOINT}/${id}`, {params})
+export const getSelectedRestaurant = async (restaurantId: string, params: GetSelectedRestaurantParams): Promise<SelectedRestaurantFromDto> => {
+    const response = await axios.get<SelectedRestaurantDto>(`${FOUR_SQUARE_ENDPOINT}/${restaurantId}`, {params})
     const data = response.data
     return selectedRestaurantMapper(data)
 }

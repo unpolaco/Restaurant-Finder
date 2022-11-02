@@ -1,17 +1,3 @@
-import { Coordinates } from "./api/restaurants/restaurants.types";
-
-export interface Restaurant {
-  name: string;
-  address: {
-    street: string;
-    city: string;
-  };
-  lat: number;
-  lng: number;
-  latLng: Coordinates;
-  id: string;
-  category: string;
-}
 
 export interface SelectedRestaurant {
     name: string,
