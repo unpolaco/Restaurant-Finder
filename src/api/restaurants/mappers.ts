@@ -1,6 +1,6 @@
-import { SelectedRestaurantDto, SelectedRestaurantFromDto, RestaurantsListDto, RestaurantsListFromDto } from "./restaurants.types";
+import { SelectedRestaurantDto, SelectedRestaurant, RestaurantsListDto, RestaurantsList } from "./restaurants.types";
 
-export const restaurantListMapper = (dto: RestaurantsListDto): RestaurantsListFromDto => {
+export const restaurantListMapper = (dto: RestaurantsListDto): RestaurantsList => {
   const restaurantsList = dto.response.venues.map((venue) => ({
     name: venue.name,
     address: {
@@ -33,7 +33,7 @@ export const restaurantListMapper = (dto: RestaurantsListDto): RestaurantsListFr
   };
 };
 
-export const selectedRestaurantMapper = (dto: SelectedRestaurantDto): SelectedRestaurantFromDto => {
+export const selectedRestaurantMapper = (dto: SelectedRestaurantDto): SelectedRestaurant => {
   const data = dto.response.venue
   const photoPrefix = data.bestPhoto.prefix
   const photoSuffix = data.bestPhoto.suffix
@@ -42,8 +42,11 @@ export const selectedRestaurantMapper = (dto: SelectedRestaurantDto): SelectedRe
   return {
     name: data.name,
     id: data.id,
-    location: data.location.address,
-    city: data.location.city,
+    location: {
+      street: data.location.address || data.formattedAddress[0],
+      city: data.location.city || data.formattedAddress[1],
+      country: data.location.country || data.formattedAddress[2]
+    },
     rating: data.rating,
     ratingSignals: data.ratingSignals,
     price: {

@@ -100,7 +100,7 @@ export interface RestaurantDto {
   };
 }
 
-export interface RestaurantsListFromDto {
+export interface RestaurantsList {
   restaurantsList: Restaurant[];
   cityCenterPosition: number[];
   icon: string;
@@ -125,9 +125,11 @@ export interface SelectedRestaurantDto {
       id: string;
       name: string;
       location: {
-        city: string;
-        address: string;
-      };
+        address: string,
+        city: string,
+        country: string,
+      },
+      formattedAddress: string[],
       rating: string;
       ratingSignals: string;
       price: {
@@ -171,11 +173,14 @@ interface AttributeItemsDto {
   priceTier: number;
 }
 
-export interface SelectedRestaurantFromDto {
+export interface SelectedRestaurant {
   name: string;
   id: string;
-  location: string;
-  city: string;
+  location: {
+    street: string,
+    city: string,
+    country: string,
+  },
   rating: string;
   ratingSignals: string;
   price: {

@@ -1,6 +1,8 @@
 import React from "react";
+import { useQuery } from "react-query";
 import { getSelectedRestaurant } from "../api/restaurants/requests";
 import { getDate } from "../components/helpers/helpers";
+import { SELECTED_RESTAURANT_QUERY_KEY } from "../consts/queryKeys.consts";
 
 export const useSelectedRestaurant = () => {
   const restaurantId = "1234";
@@ -10,7 +12,15 @@ export const useSelectedRestaurant = () => {
     v: getDate(),
   };
 
-  const selectedRestaurant = getSelectedRestaurant(restaurantId, params);
+
+  const { data : selectedRestaurant} = useQuery(
+    [SELECTED_RESTAURANT_QUERY_KEY, {}],
+    () => getSelectedRestaurant(restaurantId, params),
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+    }
+  );
 
   return {
     selectedRestaurant,
