@@ -5,15 +5,18 @@ import { AnimatedLabel } from "../Label";
 import { SubmitButton } from "../Button";
 import { useSearch } from "../../hooks/useSearch";
 import { FormWrapper } from "./Form.styles";
+import { useRestaurantList } from "../../hooks/useRestaurantList";
 
 export const Form: React.FC = () => {
   const {addSearchParams } = useSearch()
+  const {refetch}= useRestaurantList()
   const [city, setCity] = useState('');
   const [category, setCategory] = useState('');
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     addSearchParams(city, [category])
+    refetch()
   };
   
   return (
