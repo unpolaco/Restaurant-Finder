@@ -1,21 +1,16 @@
-import { axios } from "./axios"
+import { axios  } from "./axios"
 import { FOUR_SQUARE_ENDPOINT } from "./endpoints.consts"
-import { restaurantListMapper, selectedRestaurantMapper } from "./mappers";
+import { restaurantListMapper } from "./mappers";
 import { SelectedRestaurantDto, RestaurantsListDto, SelectedRestaurant, RestaurantsList } from './restaurants.types';
 
-export interface GetSelectedRestaurantParams {
-    client_id: string,
-    client_secret: string,
-    v: string
-}
-export interface GetRestaurantListParams extends GetSelectedRestaurantParams {
+export interface GetRestaurantListParams  {
     near: string,
-    categoryId: string[],
+    categories: string,
     limit: number,
 }
 
 export const getRestaurantList = async (params: GetRestaurantListParams): Promise<RestaurantsList> => {
-    const response = await axios.get<RestaurantsListDto>(`${FOUR_SQUARE_ENDPOINT}/search?`, {params})
+    const response = await axios.get<RestaurantsListDto>(`${FOUR_SQUARE_ENDPOINT}/search?categories=13072&near=warsaw`)
     const data = response.data
     return restaurantListMapper(data)
 }
@@ -25,4 +20,3 @@ export const getSelectedRestaurant = async (restaurantId: string, params: GetSel
     const data = response.data
     return selectedRestaurantMapper(data)
 }
-

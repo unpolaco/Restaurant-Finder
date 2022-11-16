@@ -1,45 +1,27 @@
-
 export interface RestaurantsListDto {
   response: {
-    geocode: {
-      feature: {
-        cc: string;
-        name: string;
-        displayName: string;
-        matchedName: string;
-        highlightedName: string;
-        id: string;
-        longId: string;
-        slug: string;
-        geometry: {
-          bounds: {
-            ne: Coordinates;
-            sw: Coordinates;
-          };
-          center: Coordinates;
-        };
-      };
-    };
-    venues: VenueDto[];
+    geo_bounds: CityPosition;
+    results: RestaurantGeneralDto[];
   };
 }
 
-export interface VenueDto {
-  id: string;
-  hasPerk: boolean;
+export interface RestaurantGeneralDto {
+  fsq_id: string;
   name: string;
-  refferalId: string;
+  timezone: string;
+  link: string;
   categories: CategoryDto[];
   location: {
-    address: string;
-    cc: string;
-    city: string;
     country: string;
-    lat: number;
-    lng: number;
-    postalCode: string;
-    state: string;
-    formattedAddress: string[];
+    cross_street: string;
+    formatted_address: string;
+    locality: string;
+    postcode: string;
+    region: string;
+    address: string;
+  };
+  geocodes: {
+    main: Coordinates;
   };
 }
 
@@ -48,16 +30,50 @@ export interface CategoryDto {
     prefix: string;
     suffix: string;
   };
-  id: string;
+  id: number;
   name: string;
-  pluralName: string;
-  primary: boolean;
-  shortName: string;
+}
+export interface Category {
+  categoryIcon: string;
+  categoryId: number;
+  categoryName: string;
 }
 
 export interface Coordinates {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
+}
+
+export interface CityPosition {
+  circle: {
+    center: Coordinates;
+    radius: number;
+  };
+}
+
+export interface RestaurantsList {
+  cityPosition: CityPosition;
+  restaurantsList: RestaurantGeneral[];
+}
+
+export interface RestaurantGeneral {
+  name: string;
+  restaurantId: string;
+  timezone: string;
+  link: string;
+  categories: Category[];
+  location: {
+    country: string;
+    crossStreet: string;
+    formattedAddress: string;
+    locality: string;
+    postcode: string;
+    region: string;
+    address: string;
+  };
+  geocodes: {
+    main: Coordinates;
+  };
 }
 
 export interface RestaurantDto {
@@ -100,12 +116,6 @@ export interface RestaurantDto {
   };
 }
 
-export interface RestaurantsList {
-  restaurantsList: Restaurant[];
-  cityCenterPosition: number[];
-  icon: string;
-}
-
 export interface Restaurant {
   name: string;
   address: {
@@ -125,11 +135,11 @@ export interface SelectedRestaurantDto {
       id: string;
       name: string;
       location: {
-        address: string,
-        city: string,
-        country: string,
-      },
-      formattedAddress: string[],
+        address: string;
+        city: string;
+        country: string;
+      };
+      formattedAddress: string[];
       rating: string;
       ratingSignals: string;
       price: {
@@ -177,16 +187,16 @@ export interface SelectedRestaurant {
   name: string;
   id: string;
   location: {
-    street: string,
-    city: string,
-    country: string,
-  },
+    street: string;
+    city: string;
+    country: string;
+  };
   rating: string;
   ratingSignals: string;
   price: {
-    priceText: string,
-    currency: string
-  }
+    priceText: string;
+    currency: string;
+  };
   categories: RestaurantCategory[];
   features: Feature[];
   description: string;
