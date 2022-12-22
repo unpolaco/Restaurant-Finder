@@ -6,6 +6,7 @@ height: 40px;
 background-image: url(${({icon}) => icon});
 background-repeat: no-repeat;
 background-size: cover;
+
 background-color: transparent;
 border: none;
 `
