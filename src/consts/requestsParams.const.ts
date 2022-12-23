@@ -1,0 +1,23 @@
+export const paramsValues = [
+    'fsq_id',
+    'name',
+    'location',
+    'related_places',
+    'categories',
+    'timezone',
+    'description',
+    'tel',
+    'email',
+    'website',
+    'social_media',
+    'photos',
+    'hours',
+    'rating',
+    'popularity',
+    'price',
+    'menu',
+    'date_closed',
+    'tips',
+    'tastes',
+    'features'
+]

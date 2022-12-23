@@ -1,9 +1,7 @@
 export interface RestaurantsListDto {
-  response: {
-    geo_bounds: CityPosition;
+    context: {geo_bounds: CityPosition}
     results: RestaurantGeneralDto[];
   };
-}
 
 export interface RestaurantGeneralDto {
   fsq_id: string;
@@ -127,96 +125,4 @@ export interface Restaurant {
   latLng: Coordinates;
   id: string;
   category: string;
-}
-
-export interface SelectedRestaurantDto {
-  response: {
-    venue: {
-      id: string;
-      name: string;
-      location: {
-        address: string;
-        city: string;
-        country: string;
-      };
-      formattedAddress: string[];
-      rating: string;
-      ratingSignals: string;
-      price: {
-        message: string;
-        currency: string;
-      };
-      description: string;
-      hours: {
-        status: string;
-      };
-      categories: CategoryDto[];
-      contact: {
-        phone: string;
-        formattedPhone: string;
-        facebookUsername: string;
-      };
-      url: string;
-      shortUrl: string;
-      bestPhoto: {
-        prefix: string;
-        suffix: string;
-        width: string;
-        height: string;
-      };
-      attributes: {
-        groups: AttributesGroupDto[];
-      };
-    };
-  };
-}
-interface AttributesGroupDto {
-  type: string;
-  name: string;
-  summary: string;
-  count: number;
-  items: AttributeItemsDto[];
-}
-interface AttributeItemsDto {
-  displayName: string;
-  displayValue: string;
-  priceTier: number;
-}
-
-export interface SelectedRestaurant {
-  name: string;
-  id: string;
-  location: {
-    street: string;
-    city: string;
-    country: string;
-  };
-  rating: string;
-  ratingSignals: string;
-  price: {
-    priceText: string;
-    currency: string;
-  };
-  categories: RestaurantCategory[];
-  features: Feature[];
-  description: string;
-  open: string;
-  contact: ContactDetails;
-  photo: string;
-}
-interface RestaurantCategory {
-  name: string;
-  icon: string;
-}
-interface Feature {
-  name: string;
-  items: Item[];
-}
-interface Item {
-  itemValue: string;
-}
-interface ContactDetails {
-  phone: string;
-  facebook: string;
-  url: string;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import { GetRestaurantListParams } from "./../api/restaurants/requests";
+import { RestaurantListParams } from "./../api/restaurants/requests";
 
 export const useSearch = () => {
   let [searchParams, setSearchParams] = useSearchParams({});
@@ -15,7 +15,7 @@ export const useSearch = () => {
     setSearchParams(restaurantListParams);
   };
 
-  const restaurantListParams: GetRestaurantListParams = {
+  const restaurantListParams: RestaurantListParams = {
     near: cityParams || "warsaw",
     categories: categoriesParams ? categoriesParams : "13070",
     limit: 50,

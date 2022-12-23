@@ -1,5 +1,7 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRestaurantList } from "../../hooks/useRestaurantList";
+import { restaurantsListHardcoded } from "../helpers/restaurantDataList";
 import Icon from "../Icon";
 import {
   ListWrapper,
@@ -10,30 +12,28 @@ import {
 interface RestaurantListParams {}
 
 export const RestaurantList: React.FC<RestaurantListParams> = () => {
-  const { restaurantsList } = useRestaurantList();
+  const navigate = useNavigate()
+//   const { restaurantsList } = useRestaurantList();
+// console.log(restaurantsList);
 
+
+const handleSelectRestaurant = (restaurantId: string) => {
+navigate(`/restaurant/${restaurantId}`)
+//send request
+
+}
   return (
     <Wrapper>
-      {restaurantsList &&
-        restaurantsList.map((restaurant) => (
-          <ListWrapper
-            // onClick={onSelectRestaurant}
-            name={restaurant.name}
-            key={restaurant.restaurantId}
-          >
-            <RestaurantListText name={restaurant.name}>
-              {restaurant.name.toUpperCase()}
-            </RestaurantListText>
-            <Icon
-              //@ts-ignore
-              src={restaurant.categories[0].categoryIcon}
-              alt="restaurant category icon"
-            />
-            <RestaurantListText>
-              {restaurant.location.locality}
-            </RestaurantListText>
-          </ListWrapper>
-        ))}
+      <ul>
+      {restaurantsListHardcoded &&
+        restaurantsListHardcoded.map((restaurant) => (
+            <li key={restaurant.restaurantId} onClick={()=> handleSelectRestaurant(restaurant.restaurantId)}>
+              <p>{restaurant.name}</p>
+              <p>{restaurant.restaurantId}</p>
+              <p>{restaurant.location.address}</p>
+            </li>
+          ))}
+          </ul>
     </Wrapper>
   );
 };

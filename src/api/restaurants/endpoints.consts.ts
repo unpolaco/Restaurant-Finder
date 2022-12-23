@@ -1,1 +1,1 @@
-export const FOUR_SQUARE_ENDPOINT = "https://api.foursquare.com/v3/places"
+export const API_PROXY_FSQ = "https://restaurant-finder-api-proxy-server.onrender.com/api/fsq"
