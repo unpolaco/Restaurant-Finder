@@ -5,6 +5,7 @@ import GlobalStyle from "./styles/global_style";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/main_theme";
 import { Router } from "./Router";
+import 'semantic-ui-css/semantic.min.css'
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
