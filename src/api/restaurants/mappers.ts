@@ -48,25 +48,26 @@ export const selectedRestaurantMapper = (
 ): SelectedRestaurant => {
   const data = dto.response;
   return {
-    id: data.id,
+    id: data.fsq_id,
     name: data.name,
     location: {
       address: data.location.address,
-      city: data.location.city,
+      city: data.location.locality,
       country: data.location.country,
       formattedAddress: data.location.formatted_address,
     },
     relatedPlaces: {
       parent: {
-        id: data.related_places.parent.fsq_id,
-        name: data.related_places.parent.name,
+        id: data.related_places?.parent?.fsq_id,
+        name: data.related_places?.parent?.name,
       },
     },
     categories: data.categories.map((category: CategoryDto) => {
       return {
         categoryName: category.name,
         categoryId: category.id,
-        categoryIcon: category.icon.prefix + category.icon.suffix,
+        // TODO ?????
+        categoryIcon: category.icon.prefix + PHOTO_SIZE.SMALL + category.icon.suffix,
       };
     }),
     timezone: data.timezone,
@@ -109,72 +110,73 @@ export const selectedRestaurantMapper = (
     price: data.price,
     menu: data.menu,
     dateClosed: data.date_closed,
-    tips: data.tips.map((tip) => {
+    tips: data.tips.length > 0 ? data.tips.map((tip) => {
       return {
         createdAt: tip.created_at,
         text: tip.text,
-        lang: tip.lang,
-        id: tip.id,
-        agreeCount: tip.agree_count,
-        disagreeCount: tip.disagree_count,
+        lang: tip?.lang,
+        id: tip?.id,
+        agreeCount: tip?.agree_count,
+        disagreeCount: tip?.disagree_count,
       };
-    }),
+    }): [],
     tastes: data.tastes,
     features: {
-      payment: {
-        creditCards: {
-          "accepts credit cards":
-            data.features.payment.credit_cards.accepts_credit_cards,
-          visa: data.features.payment.credit_cards.visa,
-          "master card": data.features.payment.credit_cards.master_card,
-        },
-      },
+        payment: {
+          creditCards: {
+            "accepts credit cards":
+            data?.features?.payment?.credit_cards?.accepts_credit_cards,
+            visa: data?.features?.payment?.credit_cards?.visa,
+            "master card": data?.features?.payment?.credit_cards?.master_card,
+          },
+        } ,
+
       foodAndDrink: {
         alcohol: {
-          beer: data.features.food_and_drink.alcohol.beer,
-          cocktails: data.features.food_and_drink.alcohol.cocktails,
-          "full bar": data.features.food_and_drink.alcohol.full_bar,
-          wine: data.features.food_and_drink.alcohol.wine,
+          beer: data?.features?.food_and_drink?.alcohol?.beer,
+          cocktails: data?.features?.food_and_drink?.alcohol?.cocktails,
+          "full bar": data?.features?.food_and_drink?.alcohol?.full_bar,
+          wine: data?.features?.food_and_drink?.alcohol?.wine,
         },
       },
       meals: {
-        breakfast: data.features.meals.breakfast,
-        brunch: data.features.meals.brunch,
-        lunch: data.features.meals.lunch,
-        "happy hour": data.features.meals.happy_hour,
-        dessert: data.features.meals.dessert,
-        dinner: data.features.meals.dinner,
+        breakfast: data.features?.meals?.breakfast,
+        brunch: data?.features?.meals?.brunch,
+        lunch: data?.features?.meals?.lunch,
+        "happy hour": data?.features?.meals?.happy_hour,
+        dessert: data?.features?.meals?.dessert,
+        dinner: data?.features?.meals?.dinner,
       },
       services: {
-        delivery: data.features.services.delivery,
-        takeout: data.features.services.takeout,
-        "drive through": data.features.services.drive_through,
+        delivery: data?.features?.services?.delivery,
+        takeout: data?.features?.services?.takeout,
+        "drive through": data?.features?.services?.drive_through,
         dine_in: {
-          reservations: data.features.services.dine_in.reservations,
+          reservations: data?.features?.services?.dine_in?.reservations,
           "online reservations":
-            data.features.services.dine_in.online_reservations,
+            data?.features?.services?.dine_in?.online_reservations,
           "groups only reservations":
-            data.features.services.dine_in.groups_only_reservations,
+            data?.features?.services?.dine_in?.groups_only_reservations,
         },
       },
       amenities: {
-        restroom: data.features.amenities.restroom,
-        smoking: data.features.amenities.smoking,
-        jukebox: data.features.amenities.jukebox,
-        music: data.features.amenities.music,
-        "live music": data.features.amenities.live_music,
-        "private room": data.features.amenities.private_room,
-        "outdoor seating": data.features.amenities.outdoor_seating,
-        "TV's": data.features.amenities.tvs,
-        ATM: data.features.amenities.atm,
-        "coat check": data.features.amenities.coat_check,
-        "wheelchair accessible": data.features.amenities.wheelchair_accessible,
+        restroom: data?.features?.amenities?.restroom,
+        smoking: data?.features?.amenities?.smoking,
+        jukebox: data?.features?.amenities?.jukebox,
+        music: data?.features?.amenities?.music,
+        "live music": data?.features?.amenities?.live_music,
+        "private room": data?.features?.amenities?.private_room,
+        "outdoor seating": data?.features?.amenities?.outdoor_seating,
+        "TV's": data?.features?.amenities?.tvs,
+        ATM: data?.features?.amenities?.atm,
+        "coat check": data?.features?.amenities?.coat_check,
+        "wheelchair accessible": data?.features?.amenities?.wheelchair_accessible,
         parking: {
-          parking: data.features.amenities.parking.parking,
-          "street parking": data.features.amenities.parking.street_parking,
-          "valet parking": data.features.amenities.parking.valet_parking,
-          "public lot": data.features.amenities.parking.public_lot,
-          "private lot": data.features.amenities.parking.private_lot,
+          parking: data?.features?.amenities?.parking?.parking,
+          "street parking": data?.features?.amenities?.parking?.street_parking,
+          "valet parking": data?.features?.amenities?.parking?.valet_parking,
+          "public lot": data?.features?.amenities?.parking?.public_lot,
+          "private lot": data?.features?.amenities?.parking?.private_lot,
         },
       },
     },

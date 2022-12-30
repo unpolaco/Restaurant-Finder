@@ -2,45 +2,50 @@ import { Category, CategoryDto } from "./restaurants.types";
 
 export interface SelectedRestaurantDto {
   response: {
-    id: string;
+    fsq_id: string;
     name: string;
     location: {
       address: string;
-      city: string;
+      cross_street: string;
+      locality: string;
+      postcode: string;
+      region: string;
       country: string;
       formatted_address: string;
     };
     related_places: {
-      parent: {
+      parent?: {
         fsq_id: string;
         name: string;
       };
     };
     categories: CategoryDto[];
     timezone: string;
-    description: string;
-    tel: string;
-    email: string;
-    website: string;
+    description?: string;
+    tel?: string;
+    email?: string;
+    website?: string;
     social_media: {
-      facebook_id: string;
-      instagram: string;
-      twitter: string;
+      facebook_id?: string;
+      instagram?: string;
+      twitter?: string;
     };
     photos: PhotoDto[];
     hours: {
-      open_now: boolean;
-      regular: HoursDto[];
-      seasonal: HoursDto[];
+      display?: string;
+      is_local_holiday?: boolean;
+      open_now?: boolean;
+      regular?: HoursDto[];
+      seasonal?: HoursDto[];
     };
     rating: number;
     popularity: number;
     price: number;
-    menu: string;
-    date_closed: string;
+    menu?: string;
+    date_closed?: string;
     tips: TipDto[];
-    tastes: string[];
-    features: FeaturesDto;
+    tastes?: string[];
+    features?: FeaturesDto;
   };
 }
 export interface PhotoDto {
@@ -50,7 +55,7 @@ export interface PhotoDto {
   suffix: string;
   width: number;
   height: number;
-  classifications: string[];
+  classifications?: string[];
 }
 
 export interface HoursDto {
@@ -62,65 +67,65 @@ export interface HoursDto {
 export interface TipDto {
   created_at: string;
   text: string;
-  lang: string;
-  id: string
-  agree_count: number
-  disagree_count: number
+  lang?: string;
+  id?: string
+  agree_count?: number
+  disagree_count?: number
 }
 
 export interface FeaturesDto {
-  payment: {
-    credit_cards: {
-      accepts_credit_cards: boolean;
-      visa: boolean;
-      master_card: boolean;
+  payment?: {
+    credit_cards?: {
+      accepts_credit_cards?: boolean;
+      visa?: boolean;
+      master_card?: boolean;
     };
   };
-  food_and_drink: {
-    alcohol: {
-      beer: boolean;
-      byo: boolean;
-      cocktails: boolean;
-      full_bar: boolean;
-      wine: boolean;
+  food_and_drink?: {
+    alcohol?: {
+      beer?: boolean;
+      byo?: boolean;
+      cocktails?: boolean;
+      full_bar?: boolean;
+      wine?: boolean;
     };
   };
-  meals: {
-    breakfast: boolean;
-    brunch: boolean;
-    lunch: boolean;
-    happy_hour: boolean;
-    dessert: boolean;
-    dinner: boolean;
+  meals?: {
+    breakfast?: boolean;
+    brunch?: boolean;
+    lunch?: boolean;
+    happy_hour?: boolean;
+    dessert?: boolean;
+    dinner?: boolean;
   };
-  services: {
-    delivery: boolean;
-    takeout: boolean;
-    drive_through: boolean;
-    dine_in: {
-      reservations: boolean;
-      online_reservations: boolean;
-      groups_only_reservations: boolean;
+  services?: {
+    delivery?: boolean;
+    takeout?: boolean;
+    drive_through?: boolean;
+    dine_in?: {
+      reservations?: boolean;
+      online_reservations?: boolean;
+      groups_only_reservations?: boolean;
     };
   };
-  amenities: {
-    restroom: boolean;
-    smoking: boolean;
-    jukebox: boolean;
-    music: boolean;
-    live_music: boolean;
-    private_room: boolean;
-    outdoor_seating: boolean;
-    tvs: boolean;
-    atm: boolean;
-    coat_check: boolean;
-    wheelchair_accessible: boolean;
-    parking: {
-      parking: boolean;
-      street_parking: boolean;
-      valet_parking: boolean;
-      public_lot: boolean;
-      private_lot: boolean;
+  amenities?: {
+    restroom?: boolean;
+    smoking?: boolean;
+    jukebox?: boolean;
+    music?: boolean;
+    live_music?: boolean;
+    private_room?: boolean;
+    outdoor_seating?: boolean;
+    tvs?: boolean;
+    atm?: boolean;
+    coat_check?: boolean;
+    wheelchair_accessible?: boolean;
+    parking?: {
+      parking?: boolean;
+      street_parking?: boolean;
+      valet_parking?: boolean;
+      public_lot?: boolean;
+      private_lot?: boolean;
     };
   };
 }
@@ -136,8 +141,8 @@ export interface SelectedRestaurant {
   };
   relatedPlaces?: {
     parent?: {
-      id: string;
-      name: string;
+      id?: string;
+      name?: string;
     };
   };
   categories: Category[];
@@ -162,9 +167,9 @@ export interface SelectedRestaurant {
   price?: number;
   menu?: string;
   dateClosed?: string;
-  tips: Tip[] | [];
-  tastes: string[];
-  features: Features;
+  tips?: Tip[];
+  tastes?: string[];
+  features?: Features;
 }
 
 export interface Photo {
@@ -172,7 +177,7 @@ export interface Photo {
   createdAt: string;
   photoSrc: string;
   photoSrcSmall: string;
-  classifications: string[];
+  classifications?: string[];
 }
 
 export interface Hours {
@@ -184,10 +189,10 @@ export interface Hours {
 export interface Tip {
   createdAt: string;
   text: string;
-  lang: string;
-  id: string
-  agreeCount: number
-  disagreeCount: number
+  lang?: string;
+  id?: string
+  agreeCount?: number
+  disagreeCount?: number
 }
 
 export interface Features {
